@@ -1,3 +1,5 @@
+// Завдання 1 - Галерея зображень
+
 //  Підключання бібліотеку (на початку коду - щоб працювало)
 
 import SimpleLightbox from 'simplelightbox';
@@ -95,7 +97,7 @@ gallery.innerHTML = structure; //присвоюю розмітку, що ств�
 //далі нове з SimpleLightbox
 
 const lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt', // брати текст для підписів з alt
+  captionsData: 'alt', //ключ - властивість об’єкта
   captionPosition: 'bottom',
   captionDelay: 250, // 250 мс затримки
 });

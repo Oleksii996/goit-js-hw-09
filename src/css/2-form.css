@@ -1,0 +1,46 @@
+.feedback-form {
+  background-color: #ffffff;
+}
+
+.feedback-form input,
+.feedback-form textarea {
+  margin-top: 8px;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  transition: border-color 0.2s;
+}
+
+.feedback-form input:focus,
+.feedback-form textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.feedback-form button {
+  align-self: flex-start;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 600;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.feedback-form button:hover {
+  background-color: #2563eb;
+}
+
+/* Мобілка */
+@media (max-width: 480px) {
+  .container {
+    padding: 30px 20px;
+  }
+
+  .main-title {
+    font-size: 24px;
+  }
+}
