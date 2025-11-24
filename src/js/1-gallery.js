@@ -1,4 +1,9 @@
-// Завдання 1 - Галерея - підключаємо динамічно через js файл
+//  Підключання бібліотеку (на початку коду - щоб працювало)
+
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
+// З попереднього завдання
 const images = [
   {
     preview:
@@ -65,7 +70,6 @@ const images = [
   },
 ];
 
-// Блок 1
 // Знаходимо галерею.. легко
 const gallery = document.querySelector('.gallery');
 
@@ -87,34 +91,11 @@ const structure = images
   .join('');
 
 gallery.innerHTML = structure; //присвоюю розмітку, що створив, через метод innerHTML
-console.log(structure);
 
-// Частина 4
-//стилі у файлі стилів
+//далі нове з SimpleLightbox
 
-// Частина 5
-// одна функція - обробник подій
-gallery.addEventListener('click', function (event) {
-  event.preventDefault(); // вбудований метод. заборонив перехід по посиланню, фотки не картинки прості, а саме лінки. addEventListener - також зарезервоване значення
-
-  const clickedImage = event.target.closest('.gallery-image');
-  if (!clickedImage) return;
-  // перевіряю, чи клік  по зображенню, якщо не по фото — нічого не буде. (Делегування)
-
-  // Частина 8 - Велике зображення
-  const bigImage = clickedImage.dataset.source;
-  //присвоюю змінну на зобрження
-
-  // Завдання 5: Поки що при кліку на елемент галереї виводь у консоль посилання на велике зображення, що зберігається як значення атрибуту data-source елемента img.
-  console.log(bigImage);
-
-  // Завдання 7–8: посилання на велике зображення із атрибуту data-source - bigImage
-  //через змінну лише!!!
-  const modalFenster = basicLightbox
-    .create(
-      `
-    <img src="${bigImage}" width="1112" height="640">
-  `
-    ) //задаємо стилі, якого розміру може воно відкриватись
-    .show();
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt', // брати текст для підписів з alt
+  captionPosition: 'bottom',
+  captionDelay: 250, // 250 мс затримки
 });
