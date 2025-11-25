@@ -1,28 +1,26 @@
 // Завдання 2 - Форма зворотного зв'язку
 
-//Оголоси поза будь-якими функціями об’єкт formData з полями email та message, які спочатку мають порожні рядки як значення: { email: "", message: "" }.
+//Оголоси поза будь-якими функціями об’єкт formData з полями email та message, які спочатку мають порожні рядки як значення: { email: "", message: "" }. Умова
 let formData = {
   email: '',
   message: '',
 };
 
-// Знаходимо форму для роботи.. старт
 const form = document.querySelector('.feedback-form');
 
-// 2. Відстежуємо зміни у полях (делегування через подію input на форму)
+// делегування подій
 form.addEventListener('input', function (event) {
-  // Отримуємо назву поля (email або message) і його поточне значення
-  const fieldName = event.target.name;
-  const fieldValue = event.target.value;
+  const fieldName = event.target.name; // зберігаємо ім'я поля
+  const fieldValue = event.target.value; // зберігаємо значення поля
 
-  // Оновлюємо об’єкт formData
+  //присвоєння значення відповідному полю в об'єкті formData
   formData[fieldName] = fieldValue;
 
-  // Зберігаємо у localStorage як JSON-рядок
+  //тепер цю інфу у localStorage
   localStorage.setItem('feedback-form-state', JSON.stringify(formData));
 });
 
-// 3. При завантаженні сторінки — перевіряємо localStorage
+// 3. Підзавдання При завантаженні сторінки — перевіряємо localStorage
 window.addEventListener('DOMContentLoaded', function () {
   const savedData = localStorage.getItem('feedback-form-state');
 
@@ -47,13 +45,12 @@ form.addEventListener('submit', function (event) {
   // Перевіряємо, чи заповнені обидва поля
   if (formData.email.trim() === '' || formData.message.trim() === '') {
     alert('Fill please all fields');
-    return;
+    return; // зупиняємо виконання якщо є порожні поля
   }
 
-  // Виводимо об’єкт у консоль
   console.log(formData);
 
-  // Очищаємо все
+  // очистка localStorage і об'єкта formData після submit
   localStorage.removeItem('feedback-form-state');
   formData = { email: '', message: '' };
   form.reset(); // очищає поля форми
