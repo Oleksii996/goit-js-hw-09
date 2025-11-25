@@ -1,21 +1,48 @@
 .feedback-form {
-  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+
+  max-width: 355px;
+}
+
+.feedback-form label {
+  display: flex;
+  align-items: flex-start;
+  width: auto;
+
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 15px;
+  color: #374151;
 }
 
 .feedback-form input,
 .feedback-form textarea {
   margin-top: 8px;
   padding: 12px 16px;
+
   font-size: 16px;
   border: 2px solid #e5e7eb;
   border-radius: 10px;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s ease;
 }
 
 .feedback-form input:focus,
 .feedback-form textarea:focus {
   outline: none;
   border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.feedback-form textarea {
+  resize: vertical;
+  min-height: 120px;
 }
 
 .feedback-form button {
@@ -23,24 +50,14 @@
   background-color: #3b82f6;
   color: white;
   font-weight: 600;
+  font-size: 16px;
   padding: 12px 28px;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease;
 }
 
 .feedback-form button:hover {
   background-color: #2563eb;
-}
-
-/* Мобілка */
-@media (max-width: 480px) {
-  .container {
-    padding: 30px 20px;
-  }
-
-  .main-title {
-    font-size: 24px;
-  }
 }
