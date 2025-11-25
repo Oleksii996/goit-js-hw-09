@@ -1,70 +1,60 @@
-//Завдання 2 - Форма зворотного зв'язку
-// Ключ локального сховища
-const STORAGE_KEY = 'feedback-form-state';
+// Завдання 2 - Форма зворотного зв'язку
 
-// 1. Об’єкт formData за умовчанням
-const formData = {
+//Оголоси поза будь-якими функціями об’єкт formData з полями email та message, які спочатку мають порожні рядки як значення: { email: "", message: "" }.
+let formData = {
   email: '',
   message: '',
 };
 
-// 2. Пошук форми
+// Знаходимо форму для роботи.. старт
 const form = document.querySelector('.feedback-form');
 
-// 3. Завантаження збережених даних при відкритті сторінки
-loadFormData();
+// 2. Відстежуємо зміни у полях (делегування через подію input на форму)
+form.addEventListener('input', function (event) {
+  // Отримуємо назву поля (email або message) і його поточне значення
+  const fieldName = event.target.name;
+  const fieldValue = event.target.value;
 
-// 4. Відстежуємо input на формі (делегування)
-form.addEventListener('input', onInput);
-form.addEventListener('submit', onSubmit);
+  // Оновлюємо об’єкт formData
+  formData[fieldName] = fieldValue;
 
-// ----------------- ФУНКЦІЇ -----------------
+  // Зберігаємо у localStorage як JSON-рядок
+  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
+});
 
-function onInput(event) {
-  // ігноруємо, якщо це не email або message
-  if (event.target.name === 'email') {
-    formData.email = event.target.value.trim();
+// 3. При завантаженні сторінки — перевіряємо localStorage
+window.addEventListener('DOMContentLoaded', function () {
+  const savedData = localStorage.getItem('feedback-form-state');
+
+  if (savedData) {
+    // Якщо є збережені дані — розпарсимо їх
+    const parsedData = JSON.parse(savedData);
+
+    // Оновлюємо об’єкт formData
+    formData.email = parsedData.email || '';
+    formData.message = parsedData.message || '';
+
+    // Заповнюємо поля форми
+    form.email.value = formData.email;
+    form.message.value = formData.message;
   }
+});
 
-  if (event.target.name === 'message') {
-    formData.message = event.target.value.trim();
-  }
+// 4. Обробка відправки форми
+form.addEventListener('submit', function (event) {
+  event.preventDefault(); // зупиняємо стандартну відправку
 
-  // зберігаємо в сховище
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
-}
-
-function loadFormData() {
-  const savedData = localStorage.getItem(STORAGE_KEY);
-
-  if (!savedData) return; // якщо нічого немає — виходимо
-
-  const parsedData = JSON.parse(savedData);
-
-  // Записуємо дані у formData
-  formData.email = parsedData.email;
-  formData.message = parsedData.message;
-
-  // Заповнюємо інтерфейс форми
-  form.elements.email.value = parsedData.email;
-  form.elements.message.value = parsedData.message;
-}
-
-function onSubmit(event) {
-  event.preventDefault();
-
-  // Перевіряємо заповненість
-  if (!formData.email || !formData.message) {
+  // Перевіряємо, чи заповнені обидва поля
+  if (formData.email.trim() === '' || formData.message.trim() === '') {
     alert('Fill please all fields');
     return;
   }
 
-  // Виводимо актуальні дані
+  // Виводимо об’єкт у консоль
   console.log(formData);
 
   // Очищаємо все
-  formData.email = '';
-  formData.message = '';
-  form.reset();
-  localStorage.removeItem(STORAGE_KEY);
-}
+  localStorage.removeItem('feedback-form-state');
+  formData = { email: '', message: '' };
+  form.reset(); // очищає поля форми
+});
